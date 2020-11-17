@@ -19,7 +19,7 @@ function darkMode() {
   textBox.style.backgroundColor = "rgb(255 255 255 / 50%)";
   toggleIcon.children[0].textContent = "Dark Mode";
   toggleIcon.children[1].classList.replace("fa-sun", "fa-moon");
-  imageMode('dark');
+  imageMode("dark");
 }
 
 // Light Mode Styles
@@ -28,15 +28,28 @@ function lightMode() {
   textBox.style.backgroundColor = "rgb(0 0 0 / 50%)";
   toggleIcon.children[0].textContent = "Light Mode";
   toggleIcon.children[1].classList.replace("fa-moon", "fa-sun");
-  imageMode('light');
+  imageMode("light");
 }
 
 // Switch Theme Dynamically
 function switchTheme(e) {
   e.target.checked
-    ? (document.documentElement.setAttribute("data-theme", "dark"), darkMode())
+    ? (document.documentElement.setAttribute("data-theme", "dark"),
+      darkMode(),
+      localStorage.setItem("theme", "dark"))
     : (document.documentElement.setAttribute("data-theme", "light"),
-      lightMode());
+      lightMode(),
+      localStorage.setItem("theme", "light"));
 }
 
 toggleSwitch.addEventListener("change", switchTheme);
+
+// Check local storage for theme
+const currentTheme = localStorage.getItem('theme');
+if (currentTheme) {
+  document.documentElement.setAttribute("data-theme", currentTheme)
+}
+if (currentTheme === 'dark') {
+  toggleSwitch.checked = true;
+  darkMode();
+}
